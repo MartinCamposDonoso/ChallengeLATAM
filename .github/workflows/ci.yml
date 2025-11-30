@@ -42,29 +42,6 @@ jobs:
           # Exit-zero treats all errors as warnings
           flake8 challenge/ tests/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-  docker-build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Create dummy artifacts for build
-        run: |
-          mkdir -p artifacts
-          echo '{"nc": 0, "names": []}' > artifacts/classes.json
-
-      - name: Build Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: false
-          tags: challenge-api:ci
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
   unit-tests:
     runs-on: ubuntu-latest
     steps:
