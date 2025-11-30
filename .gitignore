@@ -92,3 +92,6 @@ Desktop.ini
 # Docker
 *.dockerignore
 docker-compose.override.yml
+
+# Development Notes (private)
+dev-notes/
