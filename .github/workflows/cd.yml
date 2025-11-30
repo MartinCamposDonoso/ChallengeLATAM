@@ -1,0 +1,34 @@
+name: 'Continuous Delivery'
+
+on:
+  workflow_run:
+    workflows: ["Continuous Integration"]
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Only run if CI succeeded
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Placeholder - Build and Push Docker Image
+        run: |
+          echo "CI passed successfully!"
+          echo "Building and pushing Docker image to registry..."
+          echo "This will be implemented in Phase 7"
+
+      - name: Placeholder - Deploy to Cloud
+        run: |
+          echo "Deploying to Google Cloud Run..."
+          echo "This will be configured with GCP credentials in Phase 7"
+
+      - name: Placeholder - Verify Deployment
+        run: |
+          echo "Verifying deployment health..."
+          echo "CD pipeline not fully implemented yet"
