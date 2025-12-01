@@ -7,6 +7,7 @@ on:
       - completed
     branches:
       - main
+      - develop
   workflow_dispatch:
 
 env:
@@ -76,9 +77,18 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
 
+      - name: Set service name based on branch
+        id: service
+        run: |
+          if [[ "${{ github.event.workflow_run.head_branch }}" == "develop" ]]; then
+            echo "name=${{ secrets.CLOUD_RUN_SERVICE }}-dev" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${{ secrets.CLOUD_RUN_SERVICE }}" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Deploy to Cloud Run
         env:
-          SERVICE_NAME: ${{ secrets.CLOUD_RUN_SERVICE }}
+          SERVICE_NAME: ${{ steps.service.outputs.name }}
           REGION: ${{ secrets.GCP_REGION }}
           IMAGE: ${{ needs.docker.outputs.image_id }}:${{ needs.docker.outputs.image_tag }}
         run: |
@@ -89,3 +99,12 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --port 8080
+
+          # Get the service URL
+          SERVICE_URL=$(gcloud run services describe "${SERVICE_NAME}" \
+            --region "${REGION}" \
+            --project "${{ secrets.GCP_PROJECT }}" \
+            --format 'value(status.url)')
+
+          echo "Service deployed successfully!"
+          echo "Service URL: ${SERVICE_URL}"
