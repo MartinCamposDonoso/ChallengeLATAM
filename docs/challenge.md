@@ -2,29 +2,6 @@
 **Desarrollador:** Martín Alfonso Campos Donoso
 **Fecha:** 01/12/2025
 
-### ✏️ Data Exploration
-
-Explain:
-1. Why did you choose these hyperparameters?  
-2. How do they affect training time, GPU/CPU usage, and accuracy?  
-3. What would you try differently if you had more time or resources?
-
-### ✏️ Metrics Interpretation and Analysis
-
-Provide a short written analysis here:
-
-1. **Quantitative Summary:**
-   - What are your `mAP50` and `mAP50-95` values?
-   - Which classes achieved the highest and lowest detection performance?
-
-2. **Qualitative Analysis:**
-   - Describe common failure cases (e.g., small objects missed, overlapping detections, background confusion).
-   - Were there any label quality issues or inconsistencies you observed?
-
-3. **Improvement Proposals:**
-   - Suggest at least two improvements (data augmentation, loss tuning, class balancing, etc.).
-   - How would you validate whether these changes actually help?
-
 
 ---
 
@@ -163,13 +140,6 @@ El modelo fue entrenado utilizando el dataset procesado y validado en las seccio
 ### Resultados del Entrenamiento
 
 El modelo entrenado se guardó en `challenge/artifacts/model/model_best.pt` y está listo para ser utilizado en inferencia.
-
-#### Métricas de Evaluación
-
-Las métricas de validación incluyen:
-- **mAP50:** Precisión promedio con IoU threshold de 0.5
-- **mAP50-95:** Precisión promedio con IoU thresholds de 0.5 a 0.95
-- **Precisión y Recall** por clase
 
 Los resultados detallados del entrenamiento se encuentran en el notebook `challenge/02_model_training.ipynb`.
 
