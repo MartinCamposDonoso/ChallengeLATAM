@@ -1,0 +1,461 @@
+{
+    "cardboard box": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 1024.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 1024.0,
+            "fin": 6420.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 6420.0,
+            "fin": 14514.0,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 14514.0,
+            "fin": 98559.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "freight container": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 2414.5,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 2414.5,
+            "fin": 19140.75,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 19140.75,
+            "fin": 44230.125,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 44230.125,
+            "fin": 330050.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "person": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 2600.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 2600.0,
+            "fin": 19600.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 19600.0,
+            "fin": 45100.0,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 45100.0,
+            "fin": 250470.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "forklift": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 21756.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 21756.0,
+            "fin": 180797.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 180797.0,
+            "fin": 419358.5,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 419358.5,
+            "fin": 409600.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "license plate": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 361.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 361.0,
+            "fin": 1634.5,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 1634.5,
+            "fin": 3544.75,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 3544.75,
+            "fin": 8930.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "truck": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 7987.75,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 7987.75,
+            "fin": 30614.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 30614.0,
+            "fin": 64553.375,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 64553.375,
+            "fin": 57121.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "car": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 562.5,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 562.5,
+            "fin": 2913.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 2913.0,
+            "fin": 6438.75,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 6438.75,
+            "fin": 397440.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "ladder": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 8712.75,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 8712.75,
+            "fin": 110182.5,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 110182.5,
+            "fin": 262387.125,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 262387.125,
+            "fin": 325872.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "wood pallet": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 1814.5,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 1814.5,
+            "fin": 13819.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 13819.0,
+            "fin": 31825.75,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 31825.75,
+            "fin": 166872.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "road sign": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 568.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 568.0,
+            "fin": 6675.5,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 6675.5,
+            "fin": 15836.75,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 15836.75,
+            "fin": 89658.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "van": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 8346.75,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 8346.75,
+            "fin": 93451.5,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 93451.5,
+            "fin": 221108.625,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 221108.625,
+            "fin": 173784.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "helmet": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 480.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 480.0,
+            "fin": 2070.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 2070.0,
+            "fin": 4455.0,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 4455.0,
+            "fin": 37249.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "safety vest": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 3477.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 3477.0,
+            "fin": 15350.5,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 15350.5,
+            "fin": 33160.75,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 33160.75,
+            "fin": 84672.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "traffic cone": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 846.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 846.0,
+            "fin": 3131.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 3131.0,
+            "fin": 6558.5,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 6558.5,
+            "fin": 25650.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "traffic light": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 496.25,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 496.25,
+            "fin": 5310.75,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 5310.75,
+            "fin": 12532.5,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 12532.5,
+            "fin": 71022.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "qr code": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 486.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 486.0,
+            "fin": 600.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 600.0,
+            "fin": 676.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 676.0,
+            "fin": 790.0,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 790.0,
+            "fin": 728.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    },
+    "gloves": {
+        "Range_0_Lower_Outlier": {
+            "inicio": 0.0,
+            "fin": 0.0,
+            "description": "Area from 0 up to the Theoretical Lower Limit (LTL)"
+        },
+        "Range_1_Lower_Whisker_to_Q1": {
+            "inicio": 0.0,
+            "fin": 648.0,
+            "description": "From LTL to the first quartile (Q1)"
+        },
+        "Range_2_Q1_to_Q3_Box": {
+            "inicio": 648.0,
+            "fin": 2520.0,
+            "description": "The box body: from Q1 to Q3"
+        },
+        "Range_3_Q3_to_Upper_Whisker": {
+            "inicio": 2520.0,
+            "fin": 5328.0,
+            "description": "From Q3 to the Theoretical Upper Limit (UTL)"
+        },
+        "Range_4_Upper_Outlier_to_Max": {
+            "inicio": 5328.0,
+            "fin": 7569.0,
+            "description": "From UTL to the actual maximum area"
+        }
+    }
+}
