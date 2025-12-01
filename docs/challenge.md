@@ -2,6 +2,30 @@
 **Desarrollador:** Martín Alfonso Campos Donoso
 **Fecha:** 01/12/2025
 
+### ✏️ Data Exploration
+
+Explain:
+1. Why did you choose these hyperparameters?  
+2. How do they affect training time, GPU/CPU usage, and accuracy?  
+3. What would you try differently if you had more time or resources?
+
+### ✏️ Metrics Interpretation and Analysis
+
+Provide a short written analysis here:
+
+1. **Quantitative Summary:**
+   - What are your `mAP50` and `mAP50-95` values?
+   - Which classes achieved the highest and lowest detection performance?
+
+2. **Qualitative Analysis:**
+   - Describe common failure cases (e.g., small objects missed, overlapping detections, background confusion).
+   - Were there any label quality issues or inconsistencies you observed?
+
+3. **Improvement Proposals:**
+   - Suggest at least two improvements (data augmentation, loss tuning, class balancing, etc.).
+   - How would you validate whether these changes actually help?
+
+
 ---
 
 ## 1. Integridad de los Datos (Data Leakage)
@@ -105,7 +129,7 @@ El análisis dinámico muestra que las clases **Forklift** y **Person** poseen c
 
 ### Estrategia Sugerida
 1.  **Limpieza de Fugas:** Eliminar inmediatamente las 10 imágenes del reporte de fugas.
-2.  **Data Curation:** Priorizar una revisión manual o asistida por modelo para corregir los *missing labels* en `Person` y `Freight Container`.
+2.  **Data Curation:** Priorizar una revisión manual o asistida por modelo para corregir los *missing labels*.
 3.  **Estrategia de Sampling:** Dado el desbalance, utilizar técnicas de *oversampling* para las clases minoritarias o funciones de pérdida ponderadas (Weighted Loss).
 
 ---
@@ -149,246 +173,4 @@ Las métricas de validación incluyen:
 
 Los resultados detallados del entrenamiento se encuentran en el notebook `challenge/02_model_training.ipynb`.
 
----
 
-## 7. Deployment con FastAPI en GCP (Part III & IV)
-
-### Arquitectura del Servicio
-
-Se implementó un servicio de inferencia completo utilizando **FastAPI** y desplegado en **Google Cloud Run** con un pipeline CI/CD automatizado.
-
-### API Endpoints
-
-#### 1. Health Check
-```
-GET /health
-```
-Retorna el estado del servicio y confirmación de carga del modelo.
-
-**Respuesta:**
-```json
-{
-  "status": "healthy",
-  "model_path": "challenge/artifacts/model/model_best.pt",
-  "model_loaded": true
-}
-```
-
-#### 2. Predicción con Imagen Anotada
-```
-POST /predict
-```
-Recibe una imagen y retorna la misma imagen con bounding boxes y etiquetas de los objetos detectados.
-
-**Request:**
-- Content-Type: `multipart/form-data`
-- Body: Archivo de imagen (JPG, JPEG, PNG)
-
-**Respuesta:**
-- Content-Type: `image/jpeg`
-- Body: Imagen anotada con detecciones
-
-**Ejemplo de uso:**
-```bash
-curl -X POST "https://[SERVICE-URL]/predict" \
-  -F "file=@imagen.jpg" \
-  --output resultado_anotado.jpg
-```
-
-#### 3. Predicción con JSON
-```
-POST /predict/json
-```
-Recibe una imagen y retorna un JSON con las detecciones detalladas.
-
-**Respuesta:**
-```json
-{
-  "detections": [
-    {
-      "class_id": 0,
-      "class_name": "person",
-      "confidence": 0.89,
-      "bbox": {
-        "x1": 123.45,
-        "y1": 67.89,
-        "x2": 234.56,
-        "y2": 345.67
-      }
-    }
-  ],
-  "count": 1,
-  "image_shape": {
-    "width": 640,
-    "height": 480
-  }
-}
-```
-
-### Implementación Técnica
-
-#### Estructura del Código
-
-El servicio está implementado en `challenge/api.py` con las siguientes características:
-
-- **Framework:** FastAPI 0.115.4
-- **Modelo:** YOLOv8 cargado con Ultralytics
-- **Procesamiento de Imágenes:** PIL, NumPy, OpenCV
-- **Thresholds de Inferencia:**
-  - Confidence: 0.25
-  - IoU: 0.45
-
-#### Dockerfile Multi-Stage
-
-Se utilizó un Dockerfile multi-stage para optimizar el tamaño de la imagen:
-
-```dockerfile
-# Build stage
-FROM python:3.11-slim as builder
-RUN pip install --no-cache-dir --user -r requirements.txt
-
-# Runtime stage
-FROM python:3.11-slim
-COPY --from=builder /root/.local /root/.local
-COPY challenge/ ./challenge/
-CMD ["uvicorn", "challenge.api:app", "--host", "0.0.0.0", "--port", "8080"]
-```
-
-**Optimizaciones:**
-- Imagen base: `python:3.11-slim`
-- Build multi-stage para reducir tamaño
-- Dependencias del sistema mínimas
-- Health checks integrados
-
-### CI/CD Pipeline
-
-#### Continuous Integration (CI)
-
-**Workflow:** `.github/workflows/ci.yml`
-
-Ejecuta automáticamente en cada push:
-1. Lint con flake8
-2. Tests de importación de dependencias
-3. Validación de sintaxis
-
-#### Continuous Delivery (CD)
-
-**Workflow:** `.github/workflows/cd.yml`
-
-Pipeline automatizado que ejecuta en `develop` y `main`:
-
-1. **Docker Build:**
-   - Limpieza de espacio en disco (~30GB liberados)
-   - Build de imagen multi-stage
-   - Push a GitHub Container Registry (ghcr.io)
-
-2. **GCP Deployment:**
-   - Autenticación con Service Account
-   - Deploy a Cloud Run
-   - Configuración de servicio:
-     - Puerto: 8080
-     - CPU: 1
-     - Memoria: 2GB
-     - Acceso: Público (--allow-unauthenticated)
-
-3. **Estrategia de Branches:**
-   - `develop` → Despliega como `[service-name]-dev`
-   - `main` → Despliega como `[service-name]` (producción)
-
-### Configuración de GCP
-
-#### Secrets Requeridos
-
-Los siguientes secrets deben estar configurados en GitHub:
-
-- `GCP_SA_KEY`: Service Account Key en formato JSON
-- `GCP_PROJECT`: ID del proyecto en GCP
-- `GCP_REGION`: Región de deployment (ej: `us-central1`)
-- `CLOUD_RUN_SERVICE`: Nombre del servicio
-
-#### URL del Servicio Desplegado
-
-El servicio está disponible en:
-```
-https://[CLOUD_RUN_SERVICE]-dev-[hash].a.run.app
-```
-
-*(La URL exacta se muestra en los logs del workflow de CD después del deployment)*
-
-### Pruebas del Servicio
-
-#### Prueba Local
-
-```bash
-# Iniciar el servicio localmente
-uvicorn challenge.api:app --reload --host 0.0.0.0 --port 8080
-
-# Ejecutar tests
-python test_api.py path/to/test/image.jpg
-```
-
-#### Prueba en Producción
-
-```bash
-# Health check
-curl https://[SERVICE-URL]/health
-
-# Predicción con imagen
-curl -X POST "https://[SERVICE-URL]/predict" \
-  -F "file=@imagen.jpg" \
-  --output resultado.jpg
-
-# Predicción con JSON
-curl -X POST "https://[SERVICE-URL]/predict/json" \
-  -F "file=@imagen.jpg"
-```
-
-### Monitoreo y Logs
-
-Los logs del servicio están disponibles en:
-- **GitHub Actions:** Para builds y deployments
-- **GCP Cloud Run:** Para logs de aplicación y errores de runtime
-- **GCP Metrics:** Para métricas de latencia, CPU y memoria
-
----
-
-## 8. Conclusiones Finales
-
-### Logros del Proyecto
-
-1. ✅ **Análisis Exhaustivo del Dataset**
-   - Detección de data leakage (10 imágenes)
-   - Identificación de desbalance de clases
-   - Validación de calidad de etiquetado
-
-2. ✅ **Entrenamiento del Modelo**
-   - YOLOv8 nano entrenado exitosamente
-   - Modelo guardado en `model_best.pt`
-   - Listo para inferencia en producción
-
-3. ✅ **Servicio de Inferencia**
-   - API completa con FastAPI
-   - Endpoints para imagen anotada y JSON
-   - Documentación automática con Swagger
-
-4. ✅ **Deployment en la Nube**
-   - Servicio desplegado en Google Cloud Run
-   - Pipeline CI/CD completamente automatizado
-   - Estrategia de staging (develop) y producción (main)
-
-### Próximas Mejoras
-
-1. **Modelo:**
-   - Experimentar con YOLOv8 medium/large para mayor precisión
-   - Implementar técnicas de manejo de desbalance de clases
-   - Fine-tuning con corrección de missing labels
-
-2. **API:**
-   - Agregar autenticación y rate limiting
-   - Implementar batch processing
-   - Caché de predicciones frecuentes
-
-3. **Infraestructura:**
-   - Auto-scaling basado en carga
-   - Monitoreo con Prometheus/Grafana
-   - A/B testing entre versiones de modelo
