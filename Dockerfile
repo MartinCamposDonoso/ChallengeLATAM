@@ -1,36 +1,60 @@
 # syntax=docker/dockerfile:1.2
-FROM python:3.10-slim
+# Multi-stage build for optimized image size
+FROM python:3.11-slim as builder
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PYTHONPATH=/app
+# Install system dependencies for building
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Install system dependencies if needed for opencv
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# Final stage
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    PATH=/root/.local/bin:$PATH
+
+# Install runtime dependencies
 RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
     libxrender-dev \
     libgomp1 \
+    libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy and install Python dependencies
-COPY requirements.txt requirements.txt
-COPY requirements-test.txt requirements-test.txt
+WORKDIR /app
 
-RUN python -m pip install --upgrade pip \
-    && pip install -r requirements.txt \
-    && pip install -r requirements-test.txt
+# Copy Python packages from builder
+COPY --from=builder /root/.local /root/.local
 
 # Copy application code
-COPY challenge/ ./challenge/
-COPY tests/ ./tests/
+COPY app/ ./app/
+COPY challenge/artifacts/model/model_best.pt ./challenge/artifacts/model/model_best.pt
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8080
 
-# Run the API
-CMD ["uvicorn", "challenge.api:app", "--host", "0.0.0.0", "--port", "8000"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')" || exit 1
+
+# Run the application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
