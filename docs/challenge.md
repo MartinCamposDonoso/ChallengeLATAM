@@ -2,7 +2,8 @@
 **Desarrollador:** Martín Alfonso Campos Donoso
 **Fecha:** 01/12/2025
 
-
+**Nota:**
+- Por tiempo no se pudo realizar el deploy en GCP.
 ---
 
 ## 1. Integridad de los Datos (Data Leakage)
@@ -52,14 +53,12 @@ La inspección cualitativa revela problemas de calidad que introducen ruido en e
 
 **Problemas detectados:**
 1.  **Corrupción por Aumentación:** Algunas transformaciones parecen haber degradado la imagen o las etiquetas.
-2.  **Falsos Negativos (Missing Labels):** Objetos presentes (especialmente personas y contenedores) que no fueron etiquetados.
+
 
 <div align="center">
   <img src="imagenes/vis_etiquetas_personas.png" alt="Etiquetas Personas" width="600">
   <p><em>Figura 5: Visualización de ground truth en la clase Personas.</em></p>
 </div>
-
-A continuación, se evidencian casos críticos de falta de etiquetado:
 
 <div align="center">
   <img src="imagenes/fallas_etiquetado.png" width="45%">
