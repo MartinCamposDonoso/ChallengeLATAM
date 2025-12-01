@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.2
-# Multi-stage build for optimized image size
+# Multi-stage build for optimized image size and deployment efficiency
 FROM python:3.11-slim as builder
 
 # Install system dependencies for building
