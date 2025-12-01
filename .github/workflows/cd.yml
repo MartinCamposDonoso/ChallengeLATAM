@@ -7,28 +7,85 @@ on:
       - completed
     branches:
       - main
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  deploy:
+  docker:
     runs-on: ubuntu-latest
     # Only run if CI succeeded
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_id: ${{ steps.meta.outputs.image_id }}
+      image_tag: ${{ steps.meta.outputs.image_tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Placeholder - Build and Push Docker Image
+      - name: Set image metadata
+        id: meta
         run: |
-          echo "CI passed successfully!"
-          echo "Building and pushing Docker image to registry..."
-          echo "This will be implemented in Phase 7"
+          IMAGE_ID="${REGISTRY}/${GITHUB_REPOSITORY}"
+          IMAGE_ID="${IMAGE_ID,,}"
+          echo "image_id=${IMAGE_ID}" >> "$GITHUB_OUTPUT"
+          echo "image_tag=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
-      - name: Placeholder - Deploy to Cloud
-        run: |
-          echo "Deploying to Google Cloud Run..."
-          echo "This will be configured with GCP credentials in Phase 7"
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Placeholder - Verify Deployment
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.image_id }}:latest
+            ${{ steps.meta.outputs.image_id }}:${{ steps.meta.outputs.image_tag }}
+
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT }}
+
+      - name: Deploy to Cloud Run
+        env:
+          SERVICE_NAME: ${{ secrets.CLOUD_RUN_SERVICE }}
+          REGION: ${{ secrets.GCP_REGION }}
+          IMAGE: ${{ needs.docker.outputs.image_id }}:${{ needs.docker.outputs.image_tag }}
         run: |
-          echo "Verifying deployment health..."
-          echo "CD pipeline not fully implemented yet"
+          gcloud run deploy "${SERVICE_NAME}" \
+            --image "${IMAGE}" \
+            --region "${REGION}" \
+            --project "${{ secrets.GCP_PROJECT }}" \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8080
