@@ -9,6 +9,15 @@ on:
       - main
       - develop
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'challenge/**'
+      - 'Dockerfile'
+      - 'requirements.txt'
+      - '.github/workflows/cd.yml'
 
 env:
   REGISTRY: ghcr.io
@@ -20,8 +29,8 @@ defaults:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    # Only run if CI succeeded
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    # Only run if CI succeeded or triggered manually/by push
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
     permissions:
       contents: read
       packages: write
@@ -80,11 +89,23 @@ jobs:
       - name: Set service name based on branch
         id: service
         run: |
-          if [[ "${{ github.event.workflow_run.head_branch }}" == "develop" ]]; then
+          # Determine branch name from different event types
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            BRANCH="${{ github.ref_name }}"
+          elif [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+            BRANCH="${{ github.event.workflow_run.head_branch }}"
+          else
+            BRANCH="${{ github.ref_name }}"
+          fi
+
+          # Set service name based on branch
+          if [[ "$BRANCH" == "develop" ]]; then
             echo "name=${{ secrets.CLOUD_RUN_SERVICE }}-dev" >> "$GITHUB_OUTPUT"
           else
             echo "name=${{ secrets.CLOUD_RUN_SERVICE }}" >> "$GITHUB_OUTPUT"
           fi
+
+          echo "Deploying from branch: $BRANCH"
 
       - name: Deploy to Cloud Run
         env:
