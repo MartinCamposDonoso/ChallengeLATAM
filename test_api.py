@@ -78,7 +78,7 @@ def main():
     # Test health
     if not test_health():
         print("\n✗ API is not running or unhealthy. Start the service first:")
-        print("  uvicorn app.main:app --reload --host 0.0.0.0 --port 8080")
+        print("  uvicorn challenge.api:app --reload --host 0.0.0.0 --port 8080")
         sys.exit(1)
 
     # Test with image if provided
